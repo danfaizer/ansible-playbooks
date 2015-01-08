@@ -1,0 +1,2 @@
+# This variable should be overwritter during production deploy
+mysql_root_password: dummypassw0rd

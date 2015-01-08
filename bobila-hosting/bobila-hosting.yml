@@ -1,0 +1,9 @@
+---
+- name: Install base Bobila Hosting Server in a clean CentOS
+  hosts: bobila-hosting
+  user: root
+
+  roles:
+    - common
+    - lamp
+    - { role: monitoring, when: monitoring_enabled }

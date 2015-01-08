@@ -1,0 +1,29 @@
+---
+- name: Download New Relic repo rpm package
+  get_url: url=http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm dest=/tmp/newrelic-repo-5-3.noarch.rpm
+
+- name: Install New Relic repo rpm package
+  yum: name=/tmp/newrelic-repo-5-3.noarch.rpm state=present
+
+- name: Install required New Relic packages
+  yum: name={{ item }} state=present
+  with_items:
+    - newrelic-sysmond
+    - newrelic-php5
+
+- name: Configure New Relic key for system monitoring
+  command: /usr/sbin/nrsysmond-config --set license_key={{ new_relic_key }}
+
+- name: Set New Relic deamon enabled at start up
+  service: name=newrelic-sysmond state=started enabled=yes
+
+# newrelic-install script execution in silent mode
+- name: Install New Relic PHP monitoring app
+  command: /usr/bin/newrelic-install install
+  environment:
+    NR_INSTALL_SILENT: true
+    NR_INSTALL_KEY: "{{ new_relic_key }}"
+
+- name: Add New Relic monitoring to PHP
+  lineinfile: 'dest=/etc/php.ini line=newrelic.license="{{ new_relic_key }}"'
+  notify: httpd service restart

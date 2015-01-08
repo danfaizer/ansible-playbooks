@@ -1,0 +1,39 @@
+---  
+- name: Install LAMP required packages
+  yum: name={{ item }} state=present
+  with_items:
+    - httpd
+    - mysql
+    - mysql-server
+    - php
+    - php-mysql
+
+## APACHE INSTALL & SETUP
+- name: Set Apache http service enabled at start up
+  service: name=httpd state=started enabled=yes
+
+## MYSQL INSTALL & SETUP
+- name: Set MySQL service enabled at start up
+  service: name=mysqld state=started enabled=yes
+
+- name: Delete anonymous MySQL user for {{ ansible_nodename }}
+  action: mysql_user user="" host="{{ ansible_nodename }}" state=absent
+
+- name: Delete anonymous MySQL user for localhost
+  action: mysql_user user="" state=absent
+
+- name: Remove MySQL test database
+  action: mysql_db db=test state=absent
+
+- name: Change root user password on first run
+  mysql_user: name=root
+              password={{ mysql_root_password }}
+              priv=*.*:ALL,GRANT
+              host={{ item }}
+  with_items:
+    - "{{ ansible_nodename }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+  notify:
+    - set mysql password

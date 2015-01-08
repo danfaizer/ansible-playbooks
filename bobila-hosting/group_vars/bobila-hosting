@@ -1,0 +1,4 @@
+# Variables related to Bobila Hosting Server installation
+# These variables can be overriden by specifying them as parameter in the playbook run
+
+monitoring_enabled: true
