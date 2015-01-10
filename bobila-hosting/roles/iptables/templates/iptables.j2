@@ -1,0 +1,15 @@
+#
+# {{ ansible_managed }}
+*filter
+:INPUT ACCEPT [396:30624]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [216:23216]
+-A INPUT -p icmp -m comment --comment "000 accept all icmp" -j ACCEPT
+-A INPUT -i lo -m comment --comment "001 accept all to lo interface" -j ACCEPT
+-A INPUT -m comment --comment "002 accept related established rules" -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p tcp -m multiport --ports 80,443 -m comment --comment "100 allow http and https access" -j ACCEPT
+-A INPUT -p tcp -m multiport --ports 22 -m comment --comment "100 allow ssh access" -j ACCEPT
+-A INPUT -p tcp --dport 21 -m comment --comment "100 allow ftp access" -j ACCEPT
+-A INPUT -m comment --comment "200 drop all" -j DROP
+COMMIT
+#

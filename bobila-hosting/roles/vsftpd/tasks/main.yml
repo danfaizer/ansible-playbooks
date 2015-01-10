@@ -1,0 +1,16 @@
+---  
+- name: Install VSFTPD required packages
+  yum: name={{ item }} state=present
+  with_items:
+    - ftp
+    - vsftpd
+
+- name: Set VSFTPD service enabled at start up
+  service: name=vsftpd state=started enabled=yes
+
+- name: Load VSFTPD PAM authentication
+  template: src=vsftpd.pam.d.j2 dest=/etc/pam.d/vsftpd owner=root mode=0644
+
+- name: Load VSFTPD configuration
+  template: src=vsftpd.conf.j2 dest=/etc/vsftpd/vsftpd.conf owner=root mode=0644
+  notify: vsftpd service restart

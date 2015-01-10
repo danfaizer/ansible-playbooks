@@ -1,2 +1,2 @@
 # This variable should be overwritter during production deploy
-new_relic_key: 5acc8a8e204459d2baa3aa53741fab0a8621caeg
+new_relic_key: 5acc8a8e204459d2baa3aa53741fab0a8621caef

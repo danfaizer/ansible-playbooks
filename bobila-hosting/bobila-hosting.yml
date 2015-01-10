@@ -7,3 +7,5 @@
     - common
     - lamp
     - { role: monitoring, when: monitoring_enabled }
+    - vsftpd
+    - iptables

@@ -1,0 +1,8 @@
+---  
+- name: Load iptables access rules template
+  template: src=iptables.j2 dest=/etc/sysconfig/iptables owner=root mode=0600
+  notify: iptables service restart
+
+- name: Load iptables ftp passive module
+  lineinfile: 'dest=/etc/sysconfig/iptables-config line=IPTABLES_MODULES="ip_conntrack_ftp"'
+  notify: iptables service restart
