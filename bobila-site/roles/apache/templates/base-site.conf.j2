@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+
+<VirtualHost *:80>
+{% if site_user_email is defined %}
+  ServerAdmin {{ site_user_email }}
+{% endif %}
+  ServerName  {{ site_domain }}
+{% if site_alias_domain is defined %}
+  ServerAlias {{ site_alias_domain }}
+{% endif %}
+
+  # Custom log file locations
+  LogLevel warn
+  ErrorLog  /var/log/httpd/{{ site_user }}-error.log
+  CustomLog /var/log/httpd/{{ site_user }}-access.log combined
+
+  <Directory /var/www/html/{{ site_user }}>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Order deny,allow
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+</VirtualHost>

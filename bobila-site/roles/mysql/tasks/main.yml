@@ -1,0 +1,6 @@
+---
+- name: Create user database
+  mysql_db: name={{ site_user }} state=present
+
+- name: Create user and grant privileges to own database
+  mysql_user: name={{ site_user }} password={{ site_user_password }} priv={{ site_user }}.*:ALL state=present

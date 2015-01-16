@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DAY=$(date +%u)
+
+tar cfz /backup/{{ site_user }}/files/www_files_$DAY.tgz /var/www/html/{{ site_user }}
+tar cfz /backup/{{ site_user }}/conf/conf_files_$DAY.tgz /etc/httpd/conf.d/{{ site_user }}.conf
+tar cfz /backup/{{ site_user }}/logs/logs_files_$DAY.tgz /var/log/httpd/{{ site_user }}*
+mysqldump --routines --triggers {{ site_user }} | bzip2 -z > /backup/{{ site_user }}/db/{{ site_user }}_dump_$DAY.sql.bz2

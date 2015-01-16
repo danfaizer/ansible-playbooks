@@ -1,4 +1,8 @@
 # Variables related to Bobila Hosting Server installation
 # These variables can be overriden by specifying them as parameter in the playbook run
 
+# Enable or disable New Relic monitoring configuration 
 monitoring_enabled: true
+
+# Default timezone is defined by path to /usr/share/zoneinfo/{{ default_timezone }}
+default_timezone: Europe/Madrid

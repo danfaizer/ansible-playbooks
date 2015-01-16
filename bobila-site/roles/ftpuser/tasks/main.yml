@@ -1,0 +1,6 @@
+---
+- name: Create site user
+  user: name={{ site_user }} shell=/usr/sbin/nologin group=ftp append=yes createhome=yes home=/var/www/html/{{ site_user }}
+
+- name: Set password to user
+  shell: '/bin/echo "{{ site_user_password }}" | /usr/bin/passwd {{ site_user }} --stdin'

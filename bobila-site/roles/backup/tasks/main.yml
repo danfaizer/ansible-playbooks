@@ -1,0 +1,27 @@
+---  
+- name: Install Cron and bzip2 packages
+  yum: name={{ item }} state=present
+  with_items:
+    - cronie
+    - bzip2
+
+- name: Set Cron service enabled at start up
+  service: name=crond state=started enabled=yes
+
+- name: Ensure user's backup folder exists
+  file: path=/backup/{{ site_user }}/{{ item }} state=directory owner=root mode=0644
+  with_items:
+    - files
+    - conf
+    - db
+    - logs
+
+- name: Load Backup script template
+  template: src=backup.sh.j2 dest=/backup/{{ site_user }}/backup.sh owner=root mode=0700
+
+- name: Generate randome cron minute variable
+  set_fact:
+    cron_minute: "{{ 59 |random }}"
+
+- name: Load Cron template backup
+  template: src=cron.template.j2 dest=/etc/cron.d/{{ site_user }} owner=root mode=0600

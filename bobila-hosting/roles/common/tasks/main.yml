@@ -14,5 +14,5 @@
 - name: Update /etc/hosts with server hostname
   template: src=hosts.j2 dest=/etc/hosts
 
-- name: Set Madrid timezone
-  file: src=/usr/share/zoneinfo/Europe/Madrid dest=/etc/localtime state=link force=yes
+- name: Set specified timezone
+  file: src=/usr/share/zoneinfo/{{ default_timezone }} dest=/etc/localtime state=link force=yes

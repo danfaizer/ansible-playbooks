@@ -1,0 +1,4 @@
+---  
+- name: Create Apache site configuration file
+  template: src=base-site.conf.j2 dest=/etc/httpd/conf.d/{{ site_user }}.conf owner=root mode=0644
+  notify: httpd service restart

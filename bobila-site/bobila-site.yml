@@ -1,0 +1,10 @@
+---
+- name: Configure a hosting site in Bobila Hosting Server
+  hosts: bobila-hosting
+  user: root
+
+  roles:
+    - ftpuser
+    - apache
+    - mysql
+    - backup

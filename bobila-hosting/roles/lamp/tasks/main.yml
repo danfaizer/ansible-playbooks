@@ -12,6 +12,9 @@
 - name: Set Apache http service enabled at start up
   service: name=httpd state=started enabled=yes
 
+- name: Enable Apache NameVirtualHost directive
+  lineinfile: 'dest=/etc/httpd/conf/httpd.conf line=NameVirtualHost *:80'
+
 ## MYSQL INSTALL & SETUP
 - name: Set MySQL service enabled at start up
   service: name=mysqld state=started enabled=yes
