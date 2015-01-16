@@ -47,4 +47,4 @@ ansible-playbook -i hosts --extra-vars "mysql_root_password='myR3allY5st0nGP4ss'
 
 That's all!
 
-You can have a look now to [bobila site setup] (http://github.com/danfaizer/ansible-playbooks/bobila-site) which setup a user account in the hosting server.
+You can have a look now to [bobila site setup] (https://github.com/danfaizer/ansible-playbooks/tree/master/bobila-site) which setup a user account in the hosting server.
